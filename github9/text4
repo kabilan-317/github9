@@ -1,0 +1,30 @@
+I’ll add a small standalone C program in the current repository and verify it compiles and prints 50 distinct entries.
+
+Ran terminal command: git status --short; Get-ChildItem -Force
+
+Ran terminal command: Get-ChildItem -Force -Recurse -File | Select-Object -ExpandProperty FullName
+
+Read 
+Completed with input: {
+  "path": "C:\\Users\\ACER\\OneDrive\\Desktop\\youtube GIT\\github9"
+}
+
+Ran terminal command: Get-ChildItem -Force 'C:\Users\ACER\OneDrive\Desktop\youtube GIT\github9'; git -C 'C:\Users\ACER\OneDrive\Desktop\youtube GIT\github9' status --short --branch
+
+Edit 
+
+The program is in place. I’m checking that it compiles and that the output contains exactly 50 distinct entries.
+
+Ran terminal command: $exe = Join-Path $env:TEMP 'github9-names-words.exe'; gcc 'C:\Users\ACER\OneDrive\Desktop\youtube GIT\github9\main.c' -std=c11 -Wall -Wextra -Werror -o $exe; if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }; $output = & $exe; if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }; $entries = @($output | ForEach-Object { ($_ -split '\. ', 2)[1] }); "Output lines: $($output.Count)"; "Unique entries: $(@($entries | Select-Object -Unique).Count)"; $output; Remove-Item $exe
+Tool execution failed with exit code 1
+
+Ran terminal command: Get-Command clang, cl, clang-cl, tcc, python -ErrorAction SilentlyContinue | Select-Object Name, Source
+Tool execution failed with exit code 1
+
+Ran terminal command: $source = Get-Content 'C:\Users\ACER\OneDrive\Desktop\youtube GIT\github9\main.c' -Raw; $matches = [regex]::Matches($source, '"([^"]+)"'); $items = @($matches | ForEach-Object { $_.Groups[1].Value }); "Entries: $($items.Count)"; "Unique: $(@($items | Select-Object -Unique).Count)"; git -C 'C:\Users\ACER\OneDrive\Desktop\youtube GIT' status --short -- 'github9/main.c'
+
+Ran terminal command: $source = Get-Content 'C:\Users\ACER\OneDrive\Desktop\youtube GIT\github9\main.c' -Raw; $array = [regex]::Match($source, 'const char \*items\[\] = \{([\s\S]*?)\};').Groups[1].Value; $items = @([regex]::Matches($array, '"([^"]+)"') | ForEach-Object { $_.Groups[1].Value }); "Array entries: $($items.Count)"; "Unique array entries: $(@($items | Select-Object -Unique).Count)"
+
+Created `main.c` with 50 unique names and words, printed one per numbered line.
+
+Verified the array has 50 distinct entries. I couldn’t compile it because no C compiler is available in the environment.
